@@ -34,10 +34,67 @@
         <h1>
 <a id="tablarasa" class="anchor" href="#tablarasa" aria-hidden="true"><span class="octicon octicon-link"></span></a>TablaRasa</h1>
 
-<p>Ruby code for creating tabla compositions, for practice or performance. There are also tools that allow for markov analysis of tabla compositions
-as well as creating new compositions based on the markov analysis of other works. I will flesh this out more as I have time.</p>
+<h2>
+<a id="description" class="anchor" href="#description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Description</h2>
 
-<p><img src="http://i.imgur.com/jA39HaC.png" alt="Graph" title="Graph output Example"></p>
+<p>Ruby code for creating <a href="http://en.wikipedia.org/wiki/Tabla">tabla</a> compositions, for practice or performance. There are also tools that allow for markov analysis of tabla compositions as well as creating new compositions based on the markov analysis of other works. The quickest way to get started is to run the "TablaRasa_usage_examples.rb" file. It will go through a basic usage sequence for the software and generate a graph output.</p>
+
+<h2>
+<a id="some-terminology" class="anchor" href="#some-terminology" aria-hidden="true"><span class="octicon octicon-link"></span></a>Some Terminology</h2>
+
+<p><a href="http://en.wikipedia.org/wiki/Bol_%28music%29">bols</a>,
+<a href="http://en.wikipedia.org/wiki/Matra_(music)">matras</a></p>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span class="octicon octicon-link"></span></a>ToDo</h2>
+
+<ul>
+<li>Increase the depth of the markov analysis.</li>
+<li>Create graph output for time dependant XYZ plane graphing</li>
+<li>Include midi support for computer performance of generated compositions</li>
+</ul>
+
+<h2>
+<a id="usage-examples" class="anchor" href="#usage-examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage Examples</h2>
+
+<p>In the tabla_composition_generator.rb file there a few options for constructing a composition.</p>
+
+<div class="highlight highlight-Ruby"><pre> gen_string_of_hits numberofhits</pre></div>
+
+<p>This can get passed an integer, and it will return a string of random bols as long as the integer passed to it:</p>
+
+<div class="highlight highlight-Ruby"><pre> gen_string_of_hits <span class="pl-c1">5</span>
+ =&gt;  <span class="pl-vo">Te</span> <span class="pl-vo">Dha3</span> <span class="pl-vo">Ge</span> <span class="pl-vo">Tun</span> <span class="pl-vo">Re</span></pre></div>
+
+<div class="highlight highlight-Ruby"><pre>gen_equal_subdivision numberofhits, matradiv</pre></div>
+
+<p>This will return a string of length "numberofhits" with equal subdivisions set by "matradiv" </p>
+
+<div class="highlight highlight-Ruby"><pre> gen_string_of_hits <span class="pl-c1">10</span>, <span class="pl-c1">5</span>
+ =&gt;   <span class="pl-k">|</span> <span class="pl-vo">Dhet</span> <span class="pl-vo">Re</span> <span class="pl-vo">Te</span> <span class="pl-vo">Dhi</span> <span class="pl-vo">Tin</span> <span class="pl-k">|</span> <span class="pl-vo">Tun</span> <span class="pl-vo">Dha</span> <span class="pl-vo">Din</span> <span class="pl-vo">Te</span> <span class="pl-vo">Ta</span><span class="pl-k">|</span></pre></div>
+
+<div class="highlight highlight-Ruby"><pre>gen_multi_subdivison numberofhits, sub1, sub2</pre></div>
+
+<p>This will return a string of length "numberofhits" with alternating subdivisions "sub1" and "sub2"</p>
+
+<div class="highlight highlight-Ruby"><pre>gen_multi_subdivison <span class="pl-c1">10</span>, <span class="pl-c1">2</span>, <span class="pl-c1">3</span>
+=&gt; <span class="pl-k">|</span>  <span class="pl-vo">Ka</span>  <span class="pl-vo">Din</span>  <span class="pl-k">|</span>  <span class="pl-vo">Tin</span>  <span class="pl-vo">Dha3</span>  <span class="pl-vo">Ka</span>  <span class="pl-k">|</span>  <span class="pl-vo">Te</span>  <span class="pl-vo">The2</span>  <span class="pl-k">|</span>  <span class="pl-vo">Ta</span>  <span class="pl-vo">The</span>  <span class="pl-vo">The2</span>  <span class="pl-k">|</span></pre></div>
+
+<div class="highlight highlight-Ruby"><pre>gen_markov_comp composition, desired_output_length, markov_depth</pre></div>
+
+<p>This will return a string of "desired_output_length" based on a Markov analysis of the "composition" passed. Currently this only supports a "markov_depth" of 1</p>
+
+<div class="highlight highlight-Ruby"><pre> gen_markov_comp <span class="pl-s1"><span class="pl-pds">"</span>My_comp.txt<span class="pl-pds">"</span></span>, <span class="pl-c1">10</span>, <span class="pl-c1">1</span>
+ =&gt;  <span class="pl-vo">Te</span> <span class="pl-vo">Dha3</span> <span class="pl-vo">Ge</span> <span class="pl-vo">Tun</span> <span class="pl-vo">Re</span> <span class="pl-vo">Dhet</span> <span class="pl-vo">Re</span> <span class="pl-vo">Te</span> <span class="pl-vo">Dhi</span> <span class="pl-vo">Tin</span></pre></div>
+
+<h2>
+<a id="graph-example" class="anchor" href="#graph-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Graph Example</h2>
+
+<p>This is an example of the graph output using <a href="https://github.com/glejeune/Ruby-Graphviz/">Rub-Graphiz</a></p>
+
+<p><img src="http://i.imgur.com/jA39HaC.png" alt="Circular Graph" title="Circular Graph output Example"></p>
+
+<p><img src="http://i.imgur.com/AuPdtFE.png" alt="LR Graph" title="Left to right output Example"></p>
       </section>
     </div>
 
