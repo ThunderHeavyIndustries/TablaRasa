@@ -23,7 +23,7 @@ This can get passed an integer, and it will return a string of random bols as lo
  ```
 
 ```Ruby
-`gen_equal_subdivision numberofhits, matradiv` 
+gen_equal_subdivision numberofhits, matradiv
 ```
 This will return a string of length "numberofhits" with equal subdivisions set by "matradiv" 
 ```Ruby
