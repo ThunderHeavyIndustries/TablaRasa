@@ -13,40 +13,37 @@ Ruby code for creating [tabla](http://en.wikipedia.org/wiki/Tabla) compositions,
 
 ## Usage Examples
 In the tabla_composition_generator.rb file there a few options for constructing a composition.
-```Ruby
- gen_string_of_hits numberofhits
- ```
+
 This can get passed an integer, and it will return a string of random bols as long as the integer passed to it:
 ```Ruby
+ gen_string_of_hits numberofhits
+
  gen_string_of_hits 5
  =>  Te Dha3 Ge Tun Re
  ```
-
-```Ruby
-gen_equal_subdivision numberofhits, matradiv
-```
+ 
 This will return a string of length "numberofhits" with equal subdivisions set by "matradiv" 
 ```Ruby
- gen_string_of_hits 10, 5
+gen_equal_subdivision numberofhits, matradiv
+
+gen_string_of_hits 10, 5
  =>   | Dhet Re Te Dhi Tin | Tun Dha Din Te Ta|
  ```
  
+ This will return a string of length "numberofhits" with alternating subdivisions "sub1" and "sub2"
 ```Ruby
 gen_multi_subdivison numberofhits, sub1, sub2
-```
-This will return a string of length "numberofhits" with alternating subdivisions "sub1" and "sub2"
-```Ruby
+
 gen_multi_subdivison 10, 2, 3
 => |  Ka  Din  |  Tin  Dha3  Ka  |  Te  The2  |  Ta  The  The2  |
 ```
 
-```Ruby
-gen_markov_comp composition, desired_output_length, markov_depth
-```
 This will return a string of "desired_output_length" based on a Markov analysis of the "composition" passed. Currently this only supports a "markov_depth" of 1
 ```Ruby
- gen_markov_comp "My_comp.txt", 10, 1
- =>  Te Dha3 Ge Tun Re Dhet Re Te Dhi Tin
+gen_markov_comp composition, desired_output_length, markov_depth
+
+gen_markov_comp "My_comp.txt", 10, 1
+=>  Te Dha3 Ge Tun Re Dhet Re Te Dhi Tin
  ```
 
 
