@@ -62,7 +62,7 @@ gen_markov_comp "My_comp.txt", 10, 1
  bol_freq["Ta"]=> 0.05
 ```
 
-This will do a Markov analysis of a composition (currently only uses a depth of 1). It returns a hash of hashes (bol_hash_hash) containing the percentage of times a given bol is followed by any of the others
+This will do a Markov analysis of a composition (currently only uses a depth of 1). It returns a hash of hashes (bol_hash_hash) containing the percentage of times a given bol is followed by any of the others. In bol_hash_hash the first value passed is the bol you want the values for, the next value passed will return a float givin the percentage of the time that the first bol is followed by the second bol.
 ```Ruby
 markov_analysis composition_file
 
