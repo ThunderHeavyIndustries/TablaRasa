@@ -74,7 +74,7 @@ markov_analysis "My_file.txt"
 bol_hash_hash["Ta"]["Tin"]=> 0.13
 ```
 
-"comp_graph" will output a .png file of a graph of a the Markov values returned by the markov analyzer. The second parameter passed will be the name of the output .png file. The value passed to bol should be a bol, this will be the bol for which all the values will be calculated in the graph. If it's left empty (ie: "") a random bol will be chosen on which to base the graph. graph_type will determine the output style, either a top down, or radial style.
+"comp_graph" will output a .png file of a graph of a the Markov values returned by the markov analyzer. The second parameter passed will be the name of the output .png file. The value passed to bol should be a bol, this will be the bol for which all the values will be calculated in the graph. If it's left empty (ie: "") a random bol will be chosen on which to base the graph. "graph_type" will determine the output style, either a top down, or radial style.
 ```Ruby
 comp_graph composition_file, output_name, bol, graph_type
 
