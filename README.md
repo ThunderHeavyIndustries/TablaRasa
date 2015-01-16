@@ -92,3 +92,6 @@ These are examples of the graph output using [Ruby-Graphiz](https://github.com/g
 ![Circular Graph](http://i.imgur.com/jA39HaC.png "Circular Graph output Example")
 
 ![LR Graph](http://i.imgur.com/AuPdtFE.png "Left to right output Example")
+
+ {TablaRasa}
+    Copyright (C) {2015}  {Trace Norris}

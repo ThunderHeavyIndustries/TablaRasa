@@ -55,8 +55,7 @@ class Composition_analyzer
 				bol_freq[b] = comp_array.count(b).fdiv(total_hits)
 			end
 
-			return bol_count, bol_freq
-			
+			return bol_count, bol_freq	
 		else
 			puts "please specify what values you would like returned number of hits, or frequency of hits"
 		end
