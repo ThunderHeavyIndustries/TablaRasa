@@ -103,7 +103,7 @@ class Composition_analyzer
   	def comp_graph composition_file, output_name, bol, graph_type #bol is the desired hit you want to form a graph based on.
 
   		#///////////////////////////////////// Initialize and set up//////////////////////////////////////////////////////
-  		if graph_type == "circular" || "circle"
+  		if graph_type == "circular"
 			g = GraphViz.new( :G, :type => :digraph, :use => "twopi", :overlap => :scale )# Create a new graph with circular output
 		else 
 			g = GraphViz.new( :G, :type => :digraph, :overlap => :scale)# Create a new graph
