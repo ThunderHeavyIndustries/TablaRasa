@@ -1,16 +1,18 @@
 # TablaRasa
 ##Description
-Ruby code for creating [tabla](http://en.wikipedia.org/wiki/Tabla) compositions, for practice or performance. There are also tools that allow for markov analysis of tabla compositions as well as creating new compositions based on the markov analysis of other works. The quickest way to get started is to run the "TablaRasa_usage_examples.rb" file. It will go through a basic usage sequence for the software and generate a graph output.
-
-## Some Terminology 
-[bols](http://en.wikipedia.org/wiki/Bol_%28music%29),
-[matras](http://en.wikipedia.org/wiki/Matra_(music))
+Ruby code for creating [tabla](http://en.wikipedia.org/wiki/Tabla) compositions, for practice or performance. There are also tools that allow for markov analysis of tabla compositions as well as creating new compositions based on the markov analysis of other works. The quickest way to get started is to run the "TablaRasa_usage_examples.rb" file. It will go through a basic usage sequence for the software and generate a graph output. 
 
 ## ToDo
 * Increase the depth of the markov analysis.
 * Create graph output for time dependant XYZ plane graphing
 * Include midi support for computer performance of generated compositions
 * Add matra divisions to markov compositions
+
+## Some Terminology 
+For the names of the bols I'm following the framework as set up by Aloke Dutta [as outlined in this book](http://www.alokedutta.com/product/tabla-lessons-and-practice/). Here are some other terms that might be of use if one is unfamiliar with north Indian music:
+
+[bols](http://en.wikipedia.org/wiki/Bol_%28music%29),
+[matras](http://en.wikipedia.org/wiki/Matra_(music))
 
 ### Tabla_composition_generator
 In the tabla_composition_generator.rb file there a few options for constructing a composition.
