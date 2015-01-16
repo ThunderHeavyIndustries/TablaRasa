@@ -62,7 +62,7 @@ gen_markov_comp "My_comp.txt", 10, 1
  bol_freq["Ta"]=> 0.05
 ```
 
-This will do a Markov analysis of a composition (currently only uses a depth of 1). It returns a hash of hashes (bol_hash_hash) containing the percentage of times a given bol is followed by any of the others. In bol_hash_hash the first value passed is the bol you want the values for, the next value passed will return a float giving the percentage of the time that the first bol is followed by the second bol.
+"markov_analysis" will do a Markov analysis of a composition (currently only uses a depth of 1). It returns a hash of hashes (bol_hash_hash) containing the percentage of times a given bol is followed by any of the others. In bol_hash_hash the first value passed is the bol you want the values for, the next value passed will return a float giving the percentage of the time that the first bol is followed by the second bol.
 ```Ruby
 markov_analysis composition_file
 
@@ -70,11 +70,22 @@ markov_analysis "My_file.txt"
 => bol_hash_hash
 
 bol_hash_hash["Ta"]["Tin"]=> 0.13
-
 ```
 
+"comp_graph" will output a .png file of a graph of a the Markov values returned by the markov analyzer. The second parameter passed will be the name of the output .png file. The value passed to bol should be a bol, this will be the bol for which all the values will be calculated in the graph. If it's left empty (ie: "") a random bol will be chosen to base the graph on. graph_type will determine the output style, either a top down, or radial style.
+```Ruby
+comp_graph composition_file, output_name, bol, graph_type
+
+comp_graph "My_file.txt", "My_save_file" "Dha", "circular"
+=> My_save_file.png
+
+comp_graph "My_file.txt", "My_save_file" "Dha", " straight"
+=> My_save_file.png
+
+```
 ## Graph Example
-This is an example of the graph output using [Rub-Graphiz](https://github.com/glejeune/Ruby-Graphviz/)
+These are examples of the graph output using [Rub-Graphiz](https://github.com/glejeune/Ruby-Graphviz/). The first is the circular output, the second the straight output.
+
 
 ![Circular Graph](http://i.imgur.com/jA39HaC.png "Circular Graph output Example")
 
