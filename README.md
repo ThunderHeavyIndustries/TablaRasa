@@ -47,7 +47,7 @@ gen_markov_comp "My_comp.txt", 10, 1
 =>  Te Dha3 Ge Tun Re Dhet Re Te Dhi Tin
  ```
  
- ### Tabla_comp_analyzer
+### Tabla_comp_analyzer
  
  This will return a hash that contains either the number of times a given bol occurs in a composition (bol_count), or the frequency (bol_freq) of each hit in the composition
 ```Ruby
