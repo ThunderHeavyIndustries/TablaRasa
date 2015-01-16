@@ -10,8 +10,9 @@ Ruby code for creating [tabla](http://en.wikipedia.org/wiki/Tabla) compositions,
 * Increase the depth of the markov analysis.
 * Create graph output for time dependant XYZ plane graphing
 * Include midi support for computer performance of generated compositions
+* Add matra divisions to markov compositions
 
-## Usage Examples
+### Tabla_composition_generator
 In the tabla_composition_generator.rb file there a few options for constructing a composition.
 
 This can get passed an integer, and it will return a string of random bols as long as the integer passed to it:
@@ -45,7 +46,32 @@ gen_markov_comp composition, desired_output_length, markov_depth
 gen_markov_comp "My_comp.txt", 10, 1
 =>  Te Dha3 Ge Tun Re Dhet Re Te Dhi Tin
  ```
+ 
+ ### Tabla_comp_analyzer
+ 
+ This will return a hash that contains either the number of times a given bol occurs in a composition (bol_count), or the frequency (bol_freq) of each hit in the composition
+```Ruby
+ analyze_composition composition_file, return_number_of_hits, return_frequency_of_hits 
 
+ analyze_composition "My_File.txt", 1, 0 
+ => bol_count
+ bol_count["Ta"]=> 15
+ 
+  analyze_composition "My_File.txt", 0, 1 
+ => bol_freq
+ bol_freq["Ta"]=> 0.05
+```
+
+This will do a Markov analysis of a composition (currently only uses a depth of 1). It returns a hash of hashes (bol_hash_hash) containing the percentage of times a given bol is followed by any of the others
+```Ruby
+markov_analysis composition_file
+
+markov_analysis "My_file.txt"
+=> bol_hash_hash
+
+bol_hash_hash["Ta"]["Tin"]=> 0.13
+
+```
 
 ## Graph Example
 This is an example of the graph output using [Rub-Graphiz](https://github.com/glejeune/Ruby-Graphviz/)
