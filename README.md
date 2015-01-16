@@ -84,7 +84,7 @@ comp_graph "My_file.txt", "My_save_file" "Dha", " straight"
 
 ```
 ## Graph Example
-These are examples of the graph output using [Rub-Graphiz](https://github.com/glejeune/Ruby-Graphviz/). The first is the circular output, the second the straight output.
+These are examples of the graph output using [Ruby-Graphiz](https://github.com/glejeune/Ruby-Graphviz/). The first is the circular output, the second the straight output.
 
 
 ![Circular Graph](http://i.imgur.com/jA39HaC.png "Circular Graph output Example")
