@@ -164,20 +164,25 @@ class Composition_analyzer
 			two_hit_totals[previous_two] +=1
 		end
 
-		(index+1..total_hits-1).each do |x| # goes through the composition and updates each bol with a float percentage for each time it's preceded by the other two bols
+		(index..total_hits-1).each do |x| # goes through the composition and updates each bol with a float percentage for each time it's preceded by the other two bols
 			
 			current_hit = comp_array[x]
 			previous_two =  comp_array[x-1]+" "+comp_array[x-2]
-			puts "d2[#{current_hit}][#{previous_two}]= #{d2[current_hit][previous_two]} + 1/#{two_hit_totals[previous_two]} "
-			d2[current_hit][previous_two]+=1.fdiv(two_hit_totals[previous_two])
+			puts "d2[#{current_hit}][#{previous_two}]= #{d2[current_hit][previous_two]} "
+			d2[current_hit][previous_two]+=1
 		end
+		puts "so after filling out d2, d2[Ta]= "
+		puts  d2["Ta"]
+
 		total=0
 		#/////////////////// Turns the float values into a 1..10 percent value, if you sum the percents of a given bol they don't quite add up to 100%, it's usually around .98 or 1.0000004 so it's pretty damn close, but that's floats right?
 		(0..18).each do |c| #for each bol
 			d2[@@bols[c]].each do |hash,key| # for each value in the d2 of the current bol
 
-				d2[@@bols[c]][hash] = (d2[@@bols[c]][hash]/d2[@@bols[c]].size).round(2) #truncate values, ie 0.0273342 =>0.03
+				d2[@@bols[c]][hash] = (d2[@@bols[c]][hash].fdiv(d2[@@bols[c]].size)).round(2) #truncate values, ie 0.0273342 =>0.03
 				total+=d2[@@bols[c]][hash]
+
+
 
 
 			end
@@ -186,7 +191,7 @@ class Composition_analyzer
 			total=0
 		end
 		#///////////////////////////////////////////////////////////////////////////////////////////
-		puts d2["Ta"]
+		puts "d2[Ta]=#{d2["Ta"]}"
 		return d2
   	end
 
