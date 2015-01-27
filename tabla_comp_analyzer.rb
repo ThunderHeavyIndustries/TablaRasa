@@ -168,11 +168,8 @@ class Composition_analyzer
 			
 			current_hit = comp_array[x]
 			previous_two =  comp_array[x-1]+" "+comp_array[x-2]
-			puts "d2[#{current_hit}][#{previous_two}]= #{d2[current_hit][previous_two]} "
 			d2[current_hit][previous_two]+=1
 		end
-		puts "so after filling out d2, d2[Ta]= "
-		puts  d2["Ta"]
 
 		total=0
 		#/////////////////// Turns the float values into a 1..10 percent value, if you sum the percents of a given bol they don't quite add up to 100%, it's usually around .98 or 1.0000004 so it's pretty damn close, but that's floats right?
@@ -182,16 +179,10 @@ class Composition_analyzer
 				d2[@@bols[c]][hash] = (d2[@@bols[c]][hash].fdiv(d2[@@bols[c]].size)).round(2) #truncate values, ie 0.0273342 =>0.03
 				total+=d2[@@bols[c]][hash]
 
-
-
-
 			end
-			puts "/////////////////////////////////////"
-			puts "total for #{@@bols[c]} = #{total.round(2)}"
 			total=0
 		end
 		#///////////////////////////////////////////////////////////////////////////////////////////
-		puts "d2[Ta]=#{d2["Ta"]}"
 		return d2
   	end
 
