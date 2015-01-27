@@ -76,13 +76,11 @@ class Composition_analyzer
 		comp_array.flatten! #cleans up the array of arrays into a simple array that is ordered in terms of appearance in the composition
 		total_hits= comp_array.size
 		#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
 		#////////////////////// Calculate Frequencies for each hit ///////////
 			(0..comp_array.size-2).each do |x| # goes through each hit in the composition
 
 				current_hit = comp_array[x] #current hit 
 				next_hit = comp_array[x+1] #next hit 
-
 				bol_hash_hash[current_hit][next_hit]+=1.fdiv(comp_array.count(comp_array[x])) # in the current hit hash, it updates the number of times the next hit occured and calculates the % frequency of the next hit following the current hit.
 			end
 		#//////////////////////////////////////////////////////////////////////////////////////////
@@ -90,7 +88,7 @@ class Composition_analyzer
 		#/////////////////// Turns the float values into a 1..10 percent value, if you sum the percents of a given bol they don't quite add up to 100%, it's usually around .98 or 1.0000004 so it's pretty damn close, but that's floats right?
 		(0..18).each do |c| #loop through first hash
 			(0..18).each do |d| #loop through second hash
-				bol_hash_hash[@@bols[c]][@@bols[d]] = bol_hash_hash[@@bols[c]][@@bols[d]].round(2) #truncate values, ie 0.0273342 =>0.02
+				bol_hash_hash[@@bols[c]][@@bols[d]] = bol_hash_hash[@@bols[c]][@@bols[d]].round(2) #truncate values, ie 0.0273342 =>0.03
 			end
 		end
 		#///////////////////////////////////////////////////////////////////////////////////////////
@@ -128,6 +126,125 @@ class Composition_analyzer
 
 		g.output(:png => "#{output_name}.png" )
   	end
+
+
+  	def markov_analysis_with_depth composition_file, depth
+		
+		#/////////////////////////////////Initialize necessary items//////////////////////////////////////////////////
+		bol_hash_hash= Hash["Ta"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tin"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tun"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Din"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Te"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Re"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tha"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Ge"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Ka"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha2"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha3"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhi"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhe"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhet"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Kre"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "The"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "The2"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "-"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}]
+		index=depth+1
+		##///////////////////////////////////////////////////////////////////////////////////
+
+		#///////////////////////// This pulls in the composition and puts it into an array //////////////////////////////////////////////
+		composition = ReadWrite.open_read composition_file #opens the compositon file 
+		comp_array = composition.scan(/(\-|\w+)/) #creates an array of arrays of all the hits in the sequence from the composition
+		comp_array.flatten! #cleans up the array of arrays into a simple array that is ordered in terms of appearance in the composition
+		total_hits= comp_array.size
+		two_hit_totals= Hash.new
+		d2=Hash.new
+		#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		@@bols.each do|hash, key| # Set up d2 as hash of hashes
+			d2.store(key, Hash.new)
+		end
+
+		(2..total_hits-1).each do |x| # initialize two_hit_totals and d2 hash with empty values
+			
+			current_hit = comp_array[x]
+			previous_two = comp_array[x-1]+" "+comp_array[x-2]
+
+			two_hit_totals.store(previous_two, 0)
+			d2[current_hit].store(previous_two, 0)
+		end
+
+		(index+1..total_hits-1).each do |x| # Goes through and counts the number of times each pair of hits occurs in the composition
+				
+			previous_two = comp_array[x-1]+" "+comp_array[x-2]
+
+			two_hit_totals[previous_two] +=1
+		end
+
+		(index+1..total_hits-1).each do |x| # goes through the composition and updates each bol with a float percentage for each time it's preceded by the other two bols
+			
+			current_hit = comp_array[x]
+			previous_two =  comp_array[x-1]+" "+comp_array[x-2]
+			puts "d2[#{current_hit}][#{previous_two}]= #{d2[current_hit][previous_two]} + 1/#{two_hit_totals[previous_two]} "
+			d2[current_hit][previous_two]+=1.fdiv(two_hit_totals[previous_two])
+		end
+		total=0
+		#/////////////////// Turns the float values into a 1..10 percent value, if you sum the percents of a given bol they don't quite add up to 100%, it's usually around .98 or 1.0000004 so it's pretty damn close, but that's floats right?
+		(0..18).each do |c| #for each bol
+			d2[@@bols[c]].each do |hash,key| # for each value in the d2 of the current bol
+
+				d2[@@bols[c]][hash] = (d2[@@bols[c]][hash]/d2[@@bols[c]].size).round(2) #truncate values, ie 0.0273342 =>0.03
+				total+=d2[@@bols[c]][hash]
+
+
+			end
+			puts "/////////////////////////////////////"
+			puts "total for #{@@bols[c]} = #{total.round(2)}"
+			total=0
+		end
+		#///////////////////////////////////////////////////////////////////////////////////////////
+		puts d2["Ta"]
+		return d2
+  	end
+
+
+	#///////////////////////////////////////////////////////////////////////////////////////////
+	# This creates "output_name.png", a directed graph based on an input composition (compositon_file)
+	# if you pass "true" for theory, the command line will ouput a series of graph theory analysis of the composition file
+	# and graph_output_type specifies the layout for the output_name.png that is generated
+ 	#///////////////////////////////////////////////////////////////////////////////////////////
+  	def total_composition_graph composition_file, output_name, theory, graph_output_type
+
+  		graph_output_options=["circo","dot","fdp","neato","osage","sfdp","twopi"]
+  		data = markov_analysis composition_file
+
+  		g = GraphViz.new( :G, :type => :digraph, :overlap => :scale, :use => graph_output_options[graph_output_type] )
+  		t = GraphViz::Theory.new( g )
+
+
+			data.each do |h, k|
+	
+				current = g.add_node( h, :fontsize => 10 )
+
+				k.each do |l, m|
+
+					new_node = g.add_node(l, :fontsize => 10)
+					edge= current<<new_node
+					edge[:label => " #{m}\%", :fontsize => 10]
+				end
+			end
+
+		if theory==true
+
+			puts "Adjancy matrix : "
+			puts t.adjancy_matrix
+
+			puts "Symmetric ? #{t.symmetric?}"
+
+			puts "Incidence matrix :"
+			puts t.incidence_matrix
+
+			g.each_node do |name, node|
+  				puts "Degree of node `#{name}' = #{t.degree(node)}"
+			end
+
+			puts "Laplacian matrix :"
+			puts t.laplacian_matrix
+
+
+			print "Ranges : "
+			rr = t.range
+			p rr
+			puts "Your graph contains circuits" if rr.include?(nil)
+		else
+		end
+
+	
+		g.output(:png => "#{output_name}.png" )
+	end
 
 end
 

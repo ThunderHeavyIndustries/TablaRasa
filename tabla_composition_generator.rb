@@ -1,4 +1,4 @@
-## Thunder Heavy Industries Dec 2014
+# Thunder Heavy Industries Dec 2014
 # This is to analyze the tabla compositions produced by my generator, as well as the compositions
 # of others.
 # quesitons comments complaints: thunderheavyindustries@gmail.com
