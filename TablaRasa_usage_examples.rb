@@ -23,4 +23,10 @@ RW = R_W.new
 # (0..6).each do |x|
 # 	 CA.total_composition_graph "random_composition", "Whole_comp_graph_num#{x}", "false", x
 # end
+
+# This ouputs to the command line various graphy theory analyses of the composition
+ #///////////////////////////////////////////////////
+ composition= TG.gen_string_of_hits 100
+ RW.write_to_file "random_composition", composition
+ CA.total_composition_graph "random_composition", "false", "true", 0
  #///////////////////////////////////////////////////

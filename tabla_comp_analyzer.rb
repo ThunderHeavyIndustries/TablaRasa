@@ -198,26 +198,26 @@ class Composition_analyzer
  	#///////////////////////////////////////////////////////////////////////////////////////////
   	def total_composition_graph composition_file, output_name, theory, graph_output_type
 
-  		graph_output_options=["circo","dot","fdp","neato","osage","sfdp","twopi"]
-  		data = markov_analysis composition_file
+  		#///////////////////////////////// initialize values /////////////////////////////////
+  		graph_output_options=["circo","dot","fdp","neato","osage","sfdp","twopi"] #output formats for graph
+  		data = markov_analysis composition_file #pull in the data from analysis of the composition
+  		g = GraphViz.new( :G, :type => :digraph, :overlap => :scale, :use => graph_output_options[graph_output_type]) #create graph
+  		t = GraphViz::Theory.new( g ) # call this to run graph theory functions
+  		#///////////////////////////////////////////////////////////////////////////////////////////////////
 
-  		g = GraphViz.new( :G, :type => :digraph, :overlap => :scale, :use => graph_output_options[graph_output_type] )
-  		t = GraphViz::Theory.new( g )
-
-
-			data.each do |h, k|
+			data.each do |h, k| # go through the results of the markov analysis
 	
-				current = g.add_node( h, :fontsize => 10 )
+				current = g.add_node( h, :fontsize => 10 ) #create a node for each bol
 
-				k.each do |l, m|
+				k.each do |l, m| #for each hash associated with current bol
 
-					new_node = g.add_node(l, :fontsize => 10)
-					edge= current<<new_node
-					edge[:label => " #{m}\%", :fontsize => 10]
+					new_node = g.add_node(l, :fontsize => 10) # create nodes for all the other bols
+					edge= current<<new_node #link them together
+					edge[:label => " #{m}\%", :fontsize => 10] # add the % from analysis to the edge
 				end
 			end
 
-		if theory==true
+		if theory==true # outputs graph theory analysis of composition graph
 
 			puts "Adjancy matrix : "
 			puts t.adjancy_matrix
@@ -242,8 +242,12 @@ class Composition_analyzer
 		else
 		end
 
-	
-		g.output(:png => "#{output_name}.png" )
+		if output_name=="false"
+			puts "output_name= #{output_name}, So no graph created"
+		else
+			puts "graph created with name: #{output_name}.png"
+			g.output(:png => "#{output_name}.png" )
+		end
 	end
 
 end
