@@ -98,7 +98,7 @@ class Composition_analyzer
   	# Outputs a .png showing a directed graph of the markov values for one's chosen bol
   	# if no bol is provided, then it chooses one at random.
   	def comp_graph composition_file, output_name, bol, graph_type #bol is the desired hit you want to form a graph based on.
-  		puts "clean graph output version"
+
   		#///////////////////////////////////// Initialize and set up//////////////////////////////////////////////////////
   		if graph_type == "circular"
 			g = GraphViz.new( :G, :type => :digraph, :use => "twopi", :overlap => :scale )# Create a new graph with circular output
@@ -118,9 +118,12 @@ class Composition_analyzer
 		home = g.add_nodes(bol+" ") # designate the home node
 		(0..18).each do|x,y| # for each bol...
 
-			y = g.add_nodes(@@bols[x],:fontsize => 10) #create node for each bol
-			edge = home<<y # draw a line from home node to all the created nodes
-			edge[:label => " #{data[bol][@@bols[x]]}\%", :fontsize => 12] # mark all the edges with the percentages from the markov data
+			if data[bol][@@bols[x]]>0 # if othe current bol follows the analyzed bol
+				y = g.add_nodes(@@bols[x],:fontsize => 10) #create node for each bol
+				edge = home<<y # draw a line from home node to all the created nodes
+				edge[:label => " #{data[bol][@@bols[x]]}\%", :fontsize => 12] # mark all the edges with the percentages from the markov data
+			else
+			end
 		end
 		#///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -202,7 +205,7 @@ class Composition_analyzer
   		#///////////////////////////////////////////////////////////////////////////////////////////////////
 
 			data.each do |h, k| # go through the results of the markov analysis
-	
+				
 				current = g.add_node( h, :fontsize => 10 ) #create a node for each bol
 
 				k.each do |l, m| #for each hash associated with current bol
