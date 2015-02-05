@@ -9,9 +9,9 @@ RW = R_W.new
 # This creates a random composition 100 hits long, writes it to file, reads the file and does a markov analyses on the hits,
 # then outputs a .png directed graph for a random bol in the composition. 
 #///////////////////////////////////////////////////
-#composition= TG.gen_string_of_hits 100
-#RW.write_to_file "random_composition", composition
-#CA.comp_graph "random_composition", "random_composition_graph", "", "circular"
+# composition= TG.gen_string_of_hits 100
+# RW.write_to_file "random_composition", composition
+# CA.comp_graph "random_composition", "random_composition_graph", "", "circular"
 #///////////////////////////////////////////////////
 
 
@@ -20,7 +20,7 @@ RW = R_W.new
 #///////////////////////////////////////////////////
 # composition= TG.gen_string_of_hits 100
 # RW.write_to_file "random_composition", composition
-# (0..6).each do |x|
+# (0..4).each do |x|
 # 	 CA.total_composition_graph "random_composition", "Whole_comp_graph_num#{x}", "false", x
 # end
  #///////////////////////////////////////////////////
@@ -38,10 +38,9 @@ RW = R_W.new
 # This returns a markov depth analysis of depth 2
 #
  #///////////////////////////////////////////////////
- composition= TG.gen_string_of_hits 100
- RW.write_to_file "random_composition", composition
- CA.markov_analysis_with_depth "random_composition", 2
-
+ #composition= TG.gen_string_of_hits 100
+ #RW.write_to_file "random_composition", composition
+ #CA.markov_analysis_with_depth "random_composition", 2
  #///////////////////////////////////////////////////
 
 

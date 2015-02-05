@@ -98,7 +98,7 @@ class Composition_analyzer
   	# Outputs a .png showing a directed graph of the markov values for one's chosen bol
   	# if no bol is provided, then it chooses one at random.
   	def comp_graph composition_file, output_name, bol, graph_type #bol is the desired hit you want to form a graph based on.
-
+  		puts "clean graph output version"
   		#///////////////////////////////////// Initialize and set up//////////////////////////////////////////////////////
   		if graph_type == "circular"
 			g = GraphViz.new( :G, :type => :digraph, :use => "twopi", :overlap => :scale )# Create a new graph with circular output
@@ -118,7 +118,7 @@ class Composition_analyzer
 		home = g.add_nodes(bol+" ") # designate the home node
 		(0..18).each do|x,y| # for each bol...
 
-			y = g.add_nodes(@@bols[x],:fontsize => 10 ) #create node for each bol
+			y = g.add_nodes(@@bols[x],:fontsize => 10) #create node for each bol
 			edge = home<<y # draw a line from home node to all the created nodes
 			edge[:label => " #{data[bol][@@bols[x]]}\%", :fontsize => 12] # mark all the edges with the percentages from the markov data
 		end
@@ -164,7 +164,7 @@ class Composition_analyzer
 			two_hit_totals[previous_two] +=1
 		end
 
-		(index..total_hits-1).each do |x| # goes through the composition and updates each bol with a float percentage for each time it's preceded by the other two bols
+		(index..total_hits-1).each do |x| # goes through the composition and updates each bol for each time it's preceded by the other two bols
 			
 			current_hit = comp_array[x]
 			previous_two =  comp_array[x-1]+" "+comp_array[x-2]
@@ -176,7 +176,7 @@ class Composition_analyzer
 		(0..18).each do |c| #for each bol
 			d2[@@bols[c]].each do |hash,key| # for each value in the d2 of the current bol
 
-				d2[@@bols[c]][hash] = (d2[@@bols[c]][hash].fdiv(d2[@@bols[c]].size)).round(2) #truncate values, ie 0.0273342 =>0.03
+				d2[@@bols[c]][hash] = (d2[@@bols[c]][hash].fdiv(d2[@@bols[c]].size)).round(2) # find %, then truncate values, ie 0.0273342 =>0.03
 				total+=d2[@@bols[c]][hash]
 
 			end
@@ -195,7 +195,7 @@ class Composition_analyzer
   	def total_composition_graph composition_file, output_name, theory, graph_output_type
 
   		#///////////////////////////////// initialize values /////////////////////////////////
-  		graph_output_options=["circo","dot","fdp","neato","osage","sfdp","twopi"] #output formats for graph
+  		graph_output_options=["circo","dot","fdp","neato","twopi"] #output formats for graph
   		data = markov_analysis composition_file #pull in the data from analysis of the composition
   		g = GraphViz.new( :G, :type => :digraph, :overlap => :scale, :use => graph_output_options[graph_output_type]) #create graph
   		t = GraphViz::Theory.new( g ) # call this to run graph theory functions
@@ -241,7 +241,7 @@ class Composition_analyzer
 		if output_name=="false"
 			puts "output_name= #{output_name}, So no graph created"
 		else
-			puts "graph created with name: #{output_name}.png"
+			puts "graph created using #{graph_output_options[graph_output_type]} with name: #{output_name}.png"
 			g.output(:png => "#{output_name}.png" )
 		end
 	end
