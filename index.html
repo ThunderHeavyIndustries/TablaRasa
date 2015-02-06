@@ -104,7 +104,7 @@ gen_markov_comp <span class="pl-s1"><span class="pl-pds">"</span>My_comp.txt<spa
  =&gt; bol_freq
  bol_freq[<span class="pl-s1"><span class="pl-pds">"</span>Ta<span class="pl-pds">"</span></span>]=&gt; <span class="pl-c1">0.05</span></pre></div>
 
-<p>"markov_analysis" will do a Markov analysis of a composition (currently only uses a depth of 1). It returns a hash of hashes (bol_hash_hash) containing the percentage of times a given bol is followed by any of the others. In bol_hash_hash the first value passed is the bol you want the values for, the next value passed will return a float giving the percentage of the time that the first bol is followed by the second bol.</p>
+<p>"markov_analysis" will do a Markov analysis of a composition (currently only uses a depth of 1, "markov_analysis_with_depth" will do a depth of 2 currently, I'll add more in the future.). It returns a hash of hashes (bol_hash_hash) containing the percentage of times a given bol is followed by any of the others. In bol_hash_hash the first value passed is the bol you want the values for, the next value passed will return a float giving the percentage of the time that the first bol is followed by the second bol.</p>
 
 <div class="highlight highlight-Ruby"><pre>markov_analysis composition_file
 
