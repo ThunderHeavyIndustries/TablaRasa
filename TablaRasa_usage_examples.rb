@@ -40,7 +40,7 @@ RW = R_W.new
 
 
 RW.write_to_file "random_composition", (TG.gen_string_of_hits 100)
-CA.markov_analysis "random_composition", 2
+CA.markov_analysis "random_composition", 3
 
 
 

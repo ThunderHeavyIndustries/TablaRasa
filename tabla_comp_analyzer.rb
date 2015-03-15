@@ -147,12 +147,12 @@ class Composition_analyzer
 		(depth..total_hits-1).each do |x| # goes through each hit in the composition
 
 			current_hit = comp_array[x] #current hit 
-			previous_hits = ""
+			previous_hits = "" #initialize
 
 			(1..depth).each do |y| #builds the previous hits to depth specified
 				previous_hits = previous_hits+" "+comp_array[x-y]
 			end
-			bol_hash_hash[current_hit][previous_hits]=0
+			bol_hash_hash[current_hit][previous_hits]=0 #initializing a value of zero
 		end
 
 		(depth..total_hits-1).each do |x| # goes through each hit in the composition
@@ -164,19 +164,19 @@ class Composition_analyzer
 
 				previous_hits = previous_hits+" "+comp_array[x-y]
 			end
-			bol_hash_hash[current_hit][previous_hits]+=1.fdiv(comp_array.count(current_hit)) #add percentage of times 
+			bol_hash_hash[current_hit][previous_hits]+=1.fdiv(comp_array.count(current_hit)) #adds as a percentage of total times it precedes the current hit
 	
 		end
 
-		bol_hash_hash.each do |k,h|
+		bol_hash_hash.each do |k,h| #goes through each member of the hash
 
-			h.each do |m,n|
+			h.each do |m,n| #goes through each subhash
 
-				bol_hash_hash[k][m] = bol_hash_hash[k][m].round(2)
+				bol_hash_hash[k][m] = bol_hash_hash[k][m].round(2) #truncates the value to the 100's place.
 			end
 		end
 
-		return bol_hash_hash
+		return bol_hash_hash #return hash of hashes of values
   	end
 
 
