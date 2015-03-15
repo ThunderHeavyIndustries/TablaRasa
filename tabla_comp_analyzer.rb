@@ -130,63 +130,48 @@ class Composition_analyzer
 		g.output(:png => "#{output_name}.png" )
   	end
 
+  	def markov_analysis_fixed file, depth
 
-  	def markov_analysis_with_depth composition_file, depth
-		
+
 		#/////////////////////////////////Initialize necessary items//////////////////////////////////////////////////
-		bol_hash_hash= Hash["Ta"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tin"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tun"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Din"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Te"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Re"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tha"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Ge"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Ka"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha2"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha3"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhi"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhe"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhet"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Kre"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "The"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "The2"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "-"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}]
-		index=depth+1
+		bol_hash_hash= Hash["Ta"=>Hash.new, "Tin"=>Hash.new, "Tun"=>Hash.new, "Din"=>Hash.new, "Te"=>Hash.new, "Re"=>Hash.new, "Tha"=>Hash.new, "Ge"=>Hash.new, "Ka"=>Hash.new, "Dha"=>Hash.new, "Dha2"=>Hash.new, "Dha3"=>Hash.new, "Dhi"=>Hash.new, "Dhe"=>Hash.new, "Dhet"=>Hash.new, "Kre"=>Hash.new, "The"=>Hash.new, "The2"=>Hash.new, "-"=>Hash.new]
 		##///////////////////////////////////////////////////////////////////////////////////
 
 		#///////////////////////// This pulls in the composition and puts it into an array //////////////////////////////////////////////
-		composition = ReadWrite.open_read composition_file #opens the compositon file 
+		composition = ReadWrite.open_read file #opens the compositon file 
 		comp_array = composition.scan(/(\-|\w+)/) #creates an array of arrays of all the hits in the sequence from the composition
 		comp_array.flatten! #cleans up the array of arrays into a simple array that is ordered in terms of appearance in the composition
-		total_hits= comp_array.size
-		two_hit_totals= Hash.new
-		d2=Hash.new
+		total_hits= comp_array.size #total number of hits
 		#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+		(depth..total_hits-1).each do |x| # goes through each hit in the composition
 
-		@@bols.each do|hash, key| # Set up d2 as hash of hashes
-			d2.store(key, Hash.new)
-		end
+			current_hit = comp_array[x] #current hit 
+			previous_hits = ""
 
-		(2..total_hits-1).each do |x| # initialize two_hit_totals and d2 hash with empty values
-			
-			current_hit = comp_array[x]
-			previous_two = comp_array[x-1]+" "+comp_array[x-2]
-
-			two_hit_totals.store(previous_two, 0)
-			d2[current_hit].store(previous_two, 0)
-		end
-
-		(index+1..total_hits-1).each do |x| # Goes through and counts the number of times each pair of hits occurs in the composition
-				
-			previous_two = comp_array[x-1]+" "+comp_array[x-2]
-
-			two_hit_totals[previous_two] +=1
-		end
-
-		(index..total_hits-1).each do |x| # goes through the composition and updates each bol for each time it's preceded by the other two bols
-			
-			current_hit = comp_array[x]
-			previous_two =  comp_array[x-1]+" "+comp_array[x-2]
-			d2[current_hit][previous_two]+=1
-		end
-
-		total=0
-		#/////////////////// Turns the float values into a 1..10 percent value, if you sum the percents of a given bol they don't quite add up to 100%, it's usually around .98 or 1.0000004 so it's pretty damn close, but that's floats right?
-		(0..18).each do |c| #for each bol
-			d2[@@bols[c]].each do |hash,key| # for each value in the d2 of the current bol
-
-				d2[@@bols[c]][hash] = (d2[@@bols[c]][hash].fdiv(d2[@@bols[c]].size)).round(2) # find %, then truncate values, ie 0.0273342 =>0.03
-				total+=d2[@@bols[c]][hash]
+			(1..depth).each do |y| #builds the previous hits to depth specified
+				previous_hits = previous_hits+" "+comp_array[x-y]
+				bol_hash_hash[current_hit][previous_hits]=0
 
 			end
-			total=0
 		end
-		#///////////////////////////////////////////////////////////////////////////////////////////
-		return d2
+
+		(depth..total_hits-1).each do |x| # goes through each hit in the composition
+
+			current_hit = comp_array[x] #current hit 
+			previous_hits = ""
+
+			(1..depth).each do |y| #builds the previous hits to depth specified
+				previous_hits = previous_hits+" "+comp_array[x-y]
+				bol_hash_hash[current_hit][previous_hits]+=1
+
+			end
+		end
+
+		puts "bol_hash_hash "
+		puts bol_hash_hash
+
+		return bol_hash_hash
   	end
 
 
