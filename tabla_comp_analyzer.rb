@@ -64,7 +64,7 @@ class Composition_analyzer
 
 	# Returns a hash of hashes that contains the percentage of times a given bol is followed by any of the others.
 	# ie: Ta is followed by Na 30% of the time, by Dha 15% of the time etc...These values are returned as floats 
-	def markov_analysis composition_file
+	def markov_analysis1 composition_file
 		
 		#/////////////////////////////////Initialize necessary items//////////////////////////////////////////////////
 		bol_hash_hash= Hash["Ta"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tin"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tun"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Din"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Te"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Re"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tha"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Ge"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Ka"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha2"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha3"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhi"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhe"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhet"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Kre"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "The"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "The2"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "-"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}]
@@ -130,7 +130,7 @@ class Composition_analyzer
 		g.output(:png => "#{output_name}.png" )
   	end
 
-  	def markov_analysis_fixed file, depth
+  	def markov_analysis file, depth
 
 
 		#/////////////////////////////////Initialize necessary items//////////////////////////////////////////////////
@@ -151,25 +151,30 @@ class Composition_analyzer
 
 			(1..depth).each do |y| #builds the previous hits to depth specified
 				previous_hits = previous_hits+" "+comp_array[x-y]
-				bol_hash_hash[current_hit][previous_hits]=0
-
 			end
+			bol_hash_hash[current_hit][previous_hits]=0
 		end
 
 		(depth..total_hits-1).each do |x| # goes through each hit in the composition
 
 			current_hit = comp_array[x] #current hit 
-			previous_hits = ""
+			previous_hits = "" #initializing
 
 			(1..depth).each do |y| #builds the previous hits to depth specified
-				previous_hits = previous_hits+" "+comp_array[x-y]
-				bol_hash_hash[current_hit][previous_hits]+=1
 
+				previous_hits = previous_hits+" "+comp_array[x-y]
 			end
+			bol_hash_hash[current_hit][previous_hits]+=1.fdiv(comp_array.count(current_hit)) #add percentage of times 
+	
 		end
 
-		puts "bol_hash_hash "
-		puts bol_hash_hash
+		bol_hash_hash.each do |k,h|
+
+			h.each do |m,n|
+
+				bol_hash_hash[k][m] = bol_hash_hash[k][m].round(2)
+			end
+		end
 
 		return bol_hash_hash
   	end

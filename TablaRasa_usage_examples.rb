@@ -35,20 +35,12 @@ RW = R_W.new
  #///////////////////////////////////////////////////
 
 
-# This returns a markov depth analysis of depth 2
-#
- #///////////////////////////////////////////////////
- #composition= TG.gen_string_of_hits 100
- #RW.write_to_file "random_composition", composition
- #CA.markov_analysis_with_depth "random_composition", 2
- #///////////////////////////////////////////////////
 
 
 
 
-
-
-
+RW.write_to_file "random_composition", (TG.gen_string_of_hits 100)
+CA.markov_analysis "random_composition", 2
 
 
 
