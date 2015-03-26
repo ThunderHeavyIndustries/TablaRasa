@@ -106,7 +106,7 @@ class Composition_analyzer
 			g = GraphViz.new( :G, :type => :digraph, :overlap => :scale)# Create a new graph
 		end
 
-		data = markov_analysis composition_file #pull in the markov data
+		data = markov_analysis1 composition_file #pull in the markov data
 
 		if bol.empty? # in case user doesn't pass a desired bol to analyze, this chooses one at random
 			bol = @@bols[rand(19)]
@@ -189,7 +189,7 @@ class Composition_analyzer
 
   		#///////////////////////////////// initialize values /////////////////////////////////
   		graph_output_options=["circo","dot","fdp","neato","twopi"] #output formats for graph
-  		data = markov_analysis composition_file #pull in the data from analysis of the composition
+  		data = markov_analysis1 composition_file #pull in the data from analysis of the composition
   		g = GraphViz.new( :G, :type => :digraph, :overlap => :scale, :use => graph_output_options[graph_output_type]) #create graph
   		t = GraphViz::Theory.new( g ) # call this to run graph theory functions
   		#///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,14 +199,16 @@ class Composition_analyzer
 				current = g.add_node( h, :fontsize => 10 ) #create a node for each bol
 
 				k.each do |l, m| #for each hash associated with current bol
-
+					if m > 0
 					new_node = g.add_node(l, :fontsize => 10) # create nodes for all the other bols
 					edge= current<<new_node #link them together
 					edge[:label => " #{m}\%", :fontsize => 10] # add the % from analysis to the edge
+					else
+					end
 				end
 			end
 
-		if theory==true # outputs graph theory analysis of composition graph
+		if theory == true # outputs graph theory analysis of composition graph
 
 			puts "Adjancy matrix : "
 			puts t.adjancy_matrix
@@ -231,7 +233,7 @@ class Composition_analyzer
 		else
 		end
 
-		if output_name=="false"
+		if output_name == "no"
 			puts "output_name= #{output_name}, So no graph created"
 		else
 			puts "graph created using #{graph_output_options[graph_output_type]} with name: #{output_name}.png"

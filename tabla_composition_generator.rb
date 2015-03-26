@@ -91,7 +91,7 @@ class TablaCompGen
 	def gen_markov_comp composition, desired_output_length, markov_depth
 
 		#////////////////Initialization/////////////////////
-		markov_values_hash = @@TCA.markov_analysis composition #this hash comes in like so  (hash of hashes): markov_values_hash["Ta"]=> {"Ta"=>0.02, "Tin"=>0.23.....}
+		markov_values_hash = @@TCA.markov_analysis composition, markov_depth #this hash comes in like so  (hash of hashes): markov_values_hash["Ta"]=> {"Ta"=>0.02, "Tin"=>0.23.....}
 		dist_hash= Hash["Ta"=>Array.new(),"Tin"=>Array.new(),"Tun"=>Array.new(),"Din"=>Array.new(),"Te"=>Array.new(),"Re"=>Array.new(),"Tha"=>Array.new(),"Ge"=>Array.new(),"Ka"=>Array.new(),"Dha"=>Array.new(),"Dha2"=>Array.new(),"Dha3"=>Array.new(),"Dhi"=>Array.new(),"Dhe"=>Array.new(),"Dhet"=>Array.new(),"Kre"=>Array.new(),"The"=>Array.new(),"The2"=>Array.new(),"-"=>Array.new()] # this is a hash of arrays, the arrays will be filed out based on the percentage of times a hit occurs based on the markov analysis.
 		markov_composition= "" # string that will be returned as the composition
 		start = @@bols[rand(19)] #initializing the composition with a random hit
