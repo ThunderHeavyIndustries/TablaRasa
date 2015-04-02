@@ -50,6 +50,9 @@ mar.each do |x,y|
 end
 puts " "
 
+num = CA.analyze_composition "random_composition" ,1,0
+CA.charts num
+
 
 
 

@@ -4,6 +4,7 @@
 # quesitons comments complaints: thunderheavyindustries@gmail.com
 require 'graphviz'
 require 'graphviz/theory'
+require 'gruff'
 require_relative 'read_write_files'
 
 class Composition_analyzer
@@ -239,6 +240,23 @@ class Composition_analyzer
 			puts "graph created using #{graph_output_options[graph_output_type]} with name: #{output_name}.png"
 			g.output(:png => "#{output_name}.png" )
 		end
+	end
+
+	def charts data
+
+		g = Gruff::Bar.new(1100)
+		g.title = 'Tabla Chart'
+		g.labels = @@bols
+		a= Array.new
+		data.each do |k,h|
+			puts "#{k}=>#{h}"
+			a<<h
+		end
+		g.data :random_composition, a
+		#g.data :Sarah, [25, 36, 86, 39, 25, 31, 79, 88,33,45,53,24,53,26,32,12,37,29]
+		#g.data :Charles, [80, 54, 67, 54, 68, 70, 90, 95]
+	
+		g.write('exciting.png')
 	end
 
 end
