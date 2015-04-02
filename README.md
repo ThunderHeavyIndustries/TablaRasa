@@ -3,7 +3,7 @@
 Ruby code for creating [tabla](http://en.wikipedia.org/wiki/Tabla) compositions, for practice or performance. There are also tools that allow for markov analysis of tabla compositions as well as creating new compositions based on the Markov analysis of other works. The quickest way to get started is to run the "TablaRasa_usage_examples.rb" file. It will go through a basic usage sequence for the software and generate a graph output. 
 
 ## In progress
-* Increase the depth of the markov analysis.
+* Fix composition generator to deal with markov analysis of any depth.
 * Create graph output for time dependant XYZ plane graphing
 * Include midi support for computer performance of generated compositions
 * Add matra divisions to markov compositions
