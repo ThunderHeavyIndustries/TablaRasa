@@ -28,19 +28,27 @@ RW = R_W.new
 
 # This ouputs to the command line various graphy theory analyses of the composition
  #///////////////////////////////////////////////////
- composition= TG.gen_string_of_hits 100
- RW.write_to_file "random_composition", composition
- CA.total_composition_graph "random_composition", "notAll", true, 0
+ #composition= TG.gen_string_of_hits 100
+ #RW.write_to_file "random_composition", composition
+ #CA.total_composition_graph "random_composition", "notAll", true, 0
  #///////////////////////////////////////////////////
 
 
 
 
-
-
-#RW.write_to_file "random_composition", (TG.gen_string_of_hits 100)
-#TG.gen_markov_comp "random_composition", 100, 1
-
+puts " "
+#ran = TG.gen_string_of_hits 10
+#RW.write_to_file "random_composition", ran
+#puts "random comp="
+#puts ran
+mar = CA.markov_analysis "random_composition", 2
+puts "mar = "
+mar.each do |x,y|
+	puts "for #{x} we have"
+	puts y
+	 
+end
+puts " "
 
 
 

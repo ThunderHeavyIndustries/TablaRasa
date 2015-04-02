@@ -150,7 +150,7 @@ class Composition_analyzer
 			previous_hits = "" #initialize
 
 			(1..depth).each do |y| #builds the previous hits to depth specified
-				previous_hits = previous_hits+" "+comp_array[x-y]
+				previous_hits = comp_array[x-y]+" "+previous_hits
 			end
 			bol_hash_hash[current_hit][previous_hits]=0 #initializing a value of zero
 		end
@@ -162,7 +162,7 @@ class Composition_analyzer
 
 			(1..depth).each do |y| #builds the previous hits to depth specified
 
-				previous_hits = previous_hits+" "+comp_array[x-y]
+				previous_hits = comp_array[x-y]+" "+previous_hits
 			end
 			bol_hash_hash[current_hit][previous_hits]+=1.fdiv(comp_array.count(current_hit)) #adds as a percentage of total times it precedes the current hit
 	
