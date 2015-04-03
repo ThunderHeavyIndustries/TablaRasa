@@ -131,6 +131,9 @@ class Composition_analyzer
 		g.output(:png => "#{output_name}.png" )
   	end
 
+  	# This is the working version that can run at any depth.
+  	# Returns a hash of hashes that contains the percentage of times a given bol is followed by any of the others.
+	# ie: Ta is followed by Na 30% of the time, by Dha 15% of the time etc...These values are returned as floats 
   	def markov_analysis file, depth
 
 
@@ -242,21 +245,35 @@ class Composition_analyzer
 		end
 	end
 
-	def charts data
+	# Outputs charts based on input data, this is a work in progress.
+	def charts data1, data2, data3, char_name
+
+	
 
 		g = Gruff::Bar.new(1100)
-		g.title = 'Tabla Chart'
+		g.title = 'Tabla Chart Markov depth = 2'
 		g.labels = @@bols
+		g.marker_font_size = 14
+
+
 		a= Array.new
-		data.each do |k,h|
-			puts "#{k}=>#{h}"
+		data1.each do |k,h|
 			a<<h
 		end
-		g.data :random_composition, a
-		#g.data :Sarah, [25, 36, 86, 39, 25, 31, 79, 88,33,45,53,24,53,26,32,12,37,29]
-		#g.data :Charles, [80, 54, 67, 54, 68, 70, 90, 95]
-	
-		g.write('exciting.png')
+		b= Array.new
+		data2.each do |k,h|
+			b<<h
+		end
+		c= Array.new
+		data3.each do |k,h|
+			c<<h
+		end
+
+		g.data :rc1, a
+		g.data :rc2, b
+		g.data :rc3, c
+
+		g.write("#{char_name}.png")
 	end
 
 end

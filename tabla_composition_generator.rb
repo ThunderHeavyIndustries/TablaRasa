@@ -95,29 +95,43 @@ class TablaCompGen
 		dist_hash= Hash["Ta"=>Array.new(),"Tin"=>Array.new(),"Tun"=>Array.new(),"Din"=>Array.new(),"Te"=>Array.new(),"Re"=>Array.new(),"Tha"=>Array.new(),"Ge"=>Array.new(),"Ka"=>Array.new(),"Dha"=>Array.new(),"Dha2"=>Array.new(),"Dha3"=>Array.new(),"Dhi"=>Array.new(),"Dhe"=>Array.new(),"Dhet"=>Array.new(),"Kre"=>Array.new(),"The"=>Array.new(),"The2"=>Array.new(),"-"=>Array.new()] # this is a hash of arrays, the arrays will be filed out based on the percentage of times a hit occurs based on the markov analysis.
 		markov_composition= "" # string that will be returned as the composition
 		start = @@bols[rand(19)] #initializing the composition with a random hit
-		previous_hit= start # keeps track of the previous hit in the actual generation of the composition
-		#///////////////////////////////////////////////////
 
+		while markov_values_hash[start].empty? || markov_values_hash[start] == nil
+			puts "markov_composition[#{start}]= #{markov_composition[start]}"
+			start = @@bols[rand(19)]
+			puts "in while loop start= #{start}"
+		end
+		#///////////////////////////////////////////////////
+		
 		#///////////////// Fill distribution hash with values ///////////////
 		# These distributions vary a little bit, so if we check array.size=> 100, or 97, or 104. So they're not perfect 100 member arrays.
 		# this is a remnat of the float division , we lose or gain a little with each calculation, and I'm not too concerned about normalizing the whole thing
 		# for what should be an organic process (playing music) a little less than 100% accuracy probably doesn't hurt. If anything I suspect it makes
 		# the end product sound a little more organic than it would otherwise.
-		@@bols.size.times do |x| #cycle through all the hits
-			@@bols.size.times.each do |y| #cycle through all the hits again within whatever hit x happens to be...
-				((markov_values_hash[@@bols[x]][@@bols[y]]*100).floor).times do |z| # say Dha occurs 20% of the time, then 0.02*100 = 2, so put Dha into the 2 times array 
-					dist_hash[@@bols[x]].push(@@bols[y]) # this fills the array as we iterate so that we get the appropriate distribution of hits in the array for each bol within each bol
-				end
-			end
-		end
-		#////////////////////////////////////////////////////////	
+		markov_values_hash.each do |k,h|
 
+	        h.each do |i,j|
+		      (j*100).floor.times {|v| dist_hash[k].push(i)}
+		  end
+		end	
+		#////////////////////////////////////////////////////////	
+	
 		#///////////////////////// Compose the composition using the probabilites generated ///////////////////
 		desired_output_length.times do |c| # until the composition has reached the desired length...
 
-			c= dist_hash[previous_hit][rand(100)] #generates a hit based on the probabilites from the markov analysis found in the distribution hash
-			markov_composition+=" "+c # add the next hit to the string
-			previous_hit= c # keeps track of what the previous hit was for the next iteration
+			if (markov_composition.scan(/(\-|\w+)/)).flatten.size+markov_depth <desired_output_length
+			c= dist_hash[start][rand(100)] #generates a hit based on the probabilites from the markov analysis found in the distribution hash
+			if c == nil #sometimes that hit won't be present for some reason....
+				c= @@bols[rand(19)]  #in that case, put in something random
+			else
+				markov_composition+=" "+c # add the next hit(s) to the string
+			end
+			compscan = markov_composition.scan(/(\-|\w+)/)
+			compscan.flatten!
+			previous_hit= compscan.last # keeps track of what the previous hit was for the next iteration
+		    else
+		    	return markov_composition
+		    end
 		end
 		#//////////////////////////////////////////////////////////////////////////////////////////////////////
 

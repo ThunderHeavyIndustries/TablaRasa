@@ -35,24 +35,32 @@ RW = R_W.new
 
 
 
-
-puts " "
-#ran = TG.gen_string_of_hits 10
+#create a chart for the composition
+#ran = TG.gen_string_of_hits 100
 #RW.write_to_file "random_composition", ran
-#puts "random comp="
-#puts ran
-mar = CA.markov_analysis "random_composition", 2
-puts "mar = "
-mar.each do |x,y|
-	puts "for #{x} we have"
-	puts y
-	 
-end
-puts " "
+#num = CA.analyze_composition "random_composition" ,1,0
+#CA.charts num
+#///////////////////////////////////////////////////
 
-num = CA.analyze_composition "random_composition" ,1,0
-CA.charts num
+ran = TG.gen_string_of_hits 1500
+RW.write_to_file "random_composition", ran
+  
+  RW.write_to_file "markov_comp1", (TG.gen_markov_comp "random_composition", 100, 2)
+  RW.write_to_file "markov_comp2", (TG.gen_markov_comp "random_composition", 100, 2)
+  RW.write_to_file "markov_comp3", (TG.gen_markov_comp "random_composition", 100, 2)
 
+  val1 = CA.analyze_composition "markov_comp1" ,0,1
 
+  val2 = CA.analyze_composition "markov_comp2" ,0,1
 
+  val3 = CA.analyze_composition "markov_comp3" ,0,1
+
+  CA.charts val1, val2, val3, "Multi chart percents"
+
+  val1 = CA.analyze_composition "markov_comp1" ,1,0
+
+  val2 = CA.analyze_composition "markov_comp2" ,1,0
+
+  val3 = CA.analyze_composition "markov_comp3" ,1,0
+CA.charts val1, val2, val3, "Multi chart hit nums"
 
