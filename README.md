@@ -2,8 +2,14 @@
 ##Description
 Ruby code for creating [tabla](http://en.wikipedia.org/wiki/Tabla) compositions, for practice or performance. There are also tools that allow for markov analysis of tabla compositions as well as creating new compositions based on the Markov analysis of other works. The quickest way to get started is to run the "TablaRasa_usage_examples.rb" file. It will go through a basic usage sequence for the software and generate a graph output. 
 
+## Dependancies
+* [graphviz](http://www.graphviz.org/)
+* [Imagemagick](http://www.imagemagick.org/)
+* [gruff](https://github.com/topfunky/gruff)
+* [ruby-graphviz](https://github.com/glejeune/Ruby-Graphviz/)
+* [rmagick](https://github.com/rmagick/rmagick)
+
 ## In progress
-* Fix composition generator to deal with markov analysis of any depth.
 * Create graph output for time dependant XYZ plane graphing
 * Include midi support for computer performance of generated compositions
 * Add matra divisions to markov compositions
@@ -92,6 +98,12 @@ These are examples of the graph output using [Ruby-Graphiz](https://github.com/g
 ![Circular Graph](http://i.imgur.com/jA39HaC.png "Circular Graph output Example")
 
 ![LR Graph](http://i.imgur.com/AuPdtFE.png "Left to right output Example")
+
+## Chart Example
+These are examples of the chart output using [gruff](https://github.com/topfunky/gruff). The first is the total hits, the second is the percentage output for 3 random markov compositions derived from the same base composition.
+
+![number of hits](http://i.imgur.com/5vgPwmt.png "Number of hits")
+![percentage of total hits](http://i.imgur.com/on5YbOB.png "Percentages of hits")
 
  {TablaRasa}
     Copyright (C) {2015}  {Trace Norris}
