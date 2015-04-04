@@ -97,9 +97,7 @@ class TablaCompGen
 		start = @@bols[rand(19)] #initializing the composition with a random hit
 
 		while markov_values_hash[start].empty? || markov_values_hash[start] == nil
-			puts "markov_composition[#{start}]= #{markov_composition[start]}"
 			start = @@bols[rand(19)]
-			puts "in while loop start= #{start}"
 		end
 		#///////////////////////////////////////////////////
 		
@@ -130,13 +128,13 @@ class TablaCompGen
 			compscan.flatten!
 			previous_hit= compscan.last # keeps track of what the previous hit was for the next iteration
 		    else
-		    	return markov_composition
+		    	return markov_composition.reverse
 		    end
 		end
 		#//////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-		return markov_composition #the completed composition returned in string form.
+		return markov_composition.reverse #the completed composition returned in string form.
 	end
 
  end
