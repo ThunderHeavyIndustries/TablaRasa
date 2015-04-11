@@ -246,35 +246,33 @@ class Composition_analyzer
 	end
 
 	# Outputs charts based on input data, this is a work in progress.
-	def charts data1, data2, data3, char_name
+	def charts data_array, chart_title
 
-	
+		#data_array should come in as a hash with bol keys.
 
 		g = Gruff::Bar.new(1100)
-		g.title = 'Tabla Chart Markov depth = 2'
+		g.title = "#{chart_title}"
 		g.labels = @@bols
 		g.marker_font_size = 14
 
+		puts "Creating chart"
 
-		a= Array.new
-		data1.each do |k,h|
-			a<<h
-		end
-		b= Array.new
-		data2.each do |k,h|
-			b<<h
-		end
-		c= Array.new
-		data3.each do |k,h|
-			c<<h
+		data_label = -1
+		data_array.each do |arr|
+
+			data_label+=1
+			a =Array.new
+
+			arr.each {|k,h| a<<h }
+	
+			g.data "comp_#{data_label}".to_sym, a
 		end
 
-		g.data :rc1, a
-		g.data :rc2, b
-		g.data :rc3, c
-		puts "Writing #{char_name}..."
-		g.write("#{char_name}.png")
-		puts "...done writing #{char_name}"
+		puts "Writing #{chart_title}"
+		puts "."
+		puts ".."
+		g.write("#{chart_title}.png")
+		puts "...done writing #{chart_title}"
 	end
 
 end
