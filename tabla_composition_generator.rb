@@ -17,7 +17,6 @@ class TablaCompGen
 	@@bols_invert= @@bols.invert
 	@@TCA= Composition_analyzer.new
 
-
 	#this generator creates just strings of hits
 	def gen_string_of_hits numberofhits # numberofhits will determine how many bols in the string
 
@@ -120,24 +119,29 @@ class TablaCompGen
 
 			if (markov_composition.scan(/(\-|\w+)/)).flatten.size+markov_depth <desired_output_length
 			c= dist_hash[start][rand(100)] #generates a hit based on the probabilites from the markov analysis found in the distribution hash
-			if c == nil #sometimes that hit won't be present for some reason....
+			if c == nil #sometimes that hit won't be present for some reason....need to figure this out
 				c= @@bols[rand(19)]  #in that case, put in something random
+				markov_composition+=" "+c
 			else
-				markov_composition+" "+c # add the next hit(s) to the string
+				markov_composition+=" "+c # add the next hit(s) to the string
 				final_comp.push(c)
 			end
 			compscan = markov_composition.scan(/(\-|\w+)/)
 			compscan.flatten!
 			previous_hit= compscan.last # keeps track of what the previous hit was for the next iteration
 		    else
+
 		    	string_form = ""
-		    	return final_comp.reverse.map {|x| string_form+=x+" " }
+		    	final_comp.reverse.map {|x| string_form+= x + " " }
+
+		    	return string_form #the completed composition returned in string form.
 		    end
 		end
 		#//////////////////////////////////////////////////////////////////////////////////////////////////////
-		
+
 		string_form = ""
-		return final_comp.reverse.map {|x| string_form+=x+" "  } #the completed composition returned in string form.
+		finished_comp = final_comp.reverse.map {|x| string_form+= x + " "  }
+		return string_form #the completed composition returned in string form.
 	end
 
  end
