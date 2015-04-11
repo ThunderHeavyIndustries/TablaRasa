@@ -93,7 +93,8 @@ class TablaCompGen
 		#////////////////Initialization/////////////////////
 		markov_values_hash = @@TCA.markov_analysis composition, markov_depth #this hash comes in like so  (hash of hashes): markov_values_hash["Ta"]=> {"Ta"=>0.02, "Tin"=>0.23.....}
 		dist_hash= Hash["Ta"=>Array.new(),"Tin"=>Array.new(),"Tun"=>Array.new(),"Din"=>Array.new(),"Te"=>Array.new(),"Re"=>Array.new(),"Tha"=>Array.new(),"Ge"=>Array.new(),"Ka"=>Array.new(),"Dha"=>Array.new(),"Dha2"=>Array.new(),"Dha3"=>Array.new(),"Dhi"=>Array.new(),"Dhe"=>Array.new(),"Dhet"=>Array.new(),"Kre"=>Array.new(),"The"=>Array.new(),"The2"=>Array.new(),"-"=>Array.new()] # this is a hash of arrays, the arrays will be filed out based on the percentage of times a hit occurs based on the markov analysis.
-		markov_composition= "" # string that will be returned as the composition
+		markov_composition= "" # This is used to build the composition
+		final_comp = Array.new # this is used to format the composition
 		start = @@bols[rand(19)] #initializing the composition with a random hit
 
 		while markov_values_hash[start].empty? || markov_values_hash[start] == nil
@@ -122,19 +123,21 @@ class TablaCompGen
 			if c == nil #sometimes that hit won't be present for some reason....
 				c= @@bols[rand(19)]  #in that case, put in something random
 			else
-				markov_composition+=" "+c # add the next hit(s) to the string
+				markov_composition+" "+c # add the next hit(s) to the string
+				final_comp.push(c)
 			end
 			compscan = markov_composition.scan(/(\-|\w+)/)
 			compscan.flatten!
 			previous_hit= compscan.last # keeps track of what the previous hit was for the next iteration
 		    else
-		    	return markov_composition.reverse
+		    	string_form = ""
+		    	return final_comp.reverse.map {|x| string_form+=x+" " }
 		    end
 		end
 		#//////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-		return markov_composition.reverse #the completed composition returned in string form.
+		
+		string_form = ""
+		return final_comp.reverse.map {|x| string_form+=x+" "  } #the completed composition returned in string form.
 	end
 
  end

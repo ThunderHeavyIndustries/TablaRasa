@@ -18,11 +18,11 @@ RW = R_W.new
 # This creates .png files for each graph output type for the same composition
 # consisting of a directed graph representing an entire composition
 #///////////////////////////////////////////////////
-# composition= TG.gen_string_of_hits 100
+ #composition= TG.gen_string_of_hits 100
 # RW.write_to_file "random_composition", composition
-# (0..4).each do |x|
-# 	 CA.total_composition_graph "random_composition", "Whole_comp_graph_num#{x}", "false", x
-# end
+ #(0..4).each do |x|
+ 	# CA.total_composition_graph "random_composition", "Whole_comp_graph_num#{x}", "false", x
+ #end
  #///////////////////////////////////////////////////
 
 
@@ -42,25 +42,25 @@ RW = R_W.new
 #CA.charts num
 #///////////////////////////////////////////////////
 
-ran = TG.gen_string_of_hits 1500
-RW.write_to_file "random_composition", ran
-  
-  RW.write_to_file "markov_comp1", (TG.gen_markov_comp "random_composition", 100, 2)
-  RW.write_to_file "markov_comp2", (TG.gen_markov_comp "random_composition", 100, 2)
-  RW.write_to_file "markov_comp3", (TG.gen_markov_comp "random_composition", 100, 2)
+# This generates some charts for comparing markov compositions based on a random composition
+=begin
+  RW.write_to_file "random_composition", (TG.gen_string_of_hits 500)
+
+  RW.write_to_file "markov_comp1", (TG.gen_markov_comp "random_composition", 500, 2)
+  RW.write_to_file "markov_comp2", (TG.gen_markov_comp "random_composition", 500, 2)
+  RW.write_to_file "markov_comp3", (TG.gen_markov_comp "random_composition", 500, 2)
 
   val1 = CA.analyze_composition "markov_comp1" ,0,1
-
   val2 = CA.analyze_composition "markov_comp2" ,0,1
-
   val3 = CA.analyze_composition "markov_comp3" ,0,1
 
   CA.charts val1, val2, val3, "Multi chart percents"
 
   val1 = CA.analyze_composition "markov_comp1" ,1,0
-
   val2 = CA.analyze_composition "markov_comp2" ,1,0
-
   val3 = CA.analyze_composition "markov_comp3" ,1,0
-CA.charts val1, val2, val3, "Multi chart hit nums"
+
+  CA.charts val1, val2, val3, "Multi chart hit nums"
+=end
+
 

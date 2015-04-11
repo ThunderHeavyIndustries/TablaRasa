@@ -272,8 +272,9 @@ class Composition_analyzer
 		g.data :rc1, a
 		g.data :rc2, b
 		g.data :rc3, c
-
+		puts "Writing #{char_name}..."
 		g.write("#{char_name}.png")
+		puts "...done writing #{char_name}"
 	end
 
 end
