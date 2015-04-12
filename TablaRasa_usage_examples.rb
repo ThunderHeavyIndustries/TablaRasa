@@ -49,14 +49,17 @@ RW = R_W.new
 
 
 #create a chart for the composition
+#///////////////////////////////////////////////////
 #ran = TG.gen_string_of_hits 100
 #RW.write_to_file "random_composition", ran
-#num = CA.analyze_composition "random_composition" ,1,0
+#num = CA.analyze_composition "random_composition" ,0,1
 #CA.charts num
 #///////////////////////////////////////////////////
 
+
 # This generates some charts for comparing markov compositions based on a random composition
-=begin
+#///////////////////////////////////////////////////
+=begin #comment out the "=begin" and the "=end"
   #create random composition
   RW.write_to_file "random_composition", (TG.gen_string_of_hits 500) 
 
@@ -87,15 +90,4 @@ RW = R_W.new
   #pass the array and a title to the chart maker
   CA.charts comp_array2, "Number of Hits per composition"
 =end
-
-
-
-
-
-
-
-
-
-
-
-
+ #///////////////////////////////////////////////////

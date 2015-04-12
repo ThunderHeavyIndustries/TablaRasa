@@ -33,20 +33,7 @@ class Composition_analyzer
 		#//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		#///////////////////////////////// Calculate values for frequency, and number of hits, return desired value(s)///////////////////////////
-		if return_number_of_hits >0
-
-			@@bols.each do |n, b|# creates a hash with the hits, and how many time they're used in the composition.
-				bol_count[b] = comp_array.count(b)	
-			end
-			return bol_count
-
-		elsif return_frequency_of_hits >0
-			@@bols.each do |n, b|# creates a hash with the hits, and their frequency in the composition.
-				bol_freq[b] = comp_array.count(b).fdiv(total_hits)
-			end
-			return bol_freq
-
-		elsif return_frequency_of_hits >0 && return_number_of_hits >0
+		if return_frequency_of_hits >0 && return_number_of_hits >0
 
 			@@bols.each do |n, b|# creates a hash with the hits, and how many time they're used in the composition.
 				bol_count[b] = comp_array.count(b)	
@@ -57,44 +44,23 @@ class Composition_analyzer
 			end
 
 			return bol_count, bol_freq	
+
+		elsif return_frequency_of_hits >0
+			@@bols.each do |n, b|# creates a hash with the hits, and their frequency in the composition.
+				bol_freq[b] = comp_array.count(b).fdiv(total_hits)
+			end
+			return bol_freq
+
+		elsif return_number_of_hits >0
+			@@bols.each do |n, b|# creates a hash with the hits, and their frequency in the composition.
+				bol_count[b] = comp_array.count(b).fdiv(total_hits)
+			end
+			return bol_count
 		else
 			puts "please specify what values you would like returned number of hits, or frequency of hits"
 		end
 		#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	end
-
-	# Returns a hash of hashes that contains the percentage of times a given bol is followed by any of the others.
-	# ie: Ta is followed by Na 30% of the time, by Dha 15% of the time etc...These values are returned as floats 
-	def markov_analysis1 composition_file
-		
-		#/////////////////////////////////Initialize necessary items//////////////////////////////////////////////////
-		bol_hash_hash= Hash["Ta"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tin"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tun"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Din"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Te"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Re"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Tha"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Ge"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Ka"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha2"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dha3"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhi"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhe"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Dhet"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "Kre"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "The"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "The2"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}, "-"=>{"Ta"=>0, "Tin"=>0, "Tun"=>0, "Din"=>0, "Te"=>0, "Re"=>0, "Tha"=>0, "Ge"=>0, "Ka"=>0, "Dha"=>0, "Dha2"=>0, "Dha3"=>0, "Dhi"=>0, "Dhe"=>0, "Dhet"=>0, "Kre"=>0, "The"=>0, "The2"=>0, "-"=>0}]
-		##///////////////////////////////////////////////////////////////////////////////////
-
-		#///////////////////////// This pulls in the composition and puts it into an array //////////////////////////////////////////////
-		composition = ReadWrite.open_read composition_file #opens the compositon file 
-		comp_array = composition.scan(/(\-|\w+)/) #creates an array of arrays of all the hits in the sequence from the composition
-		comp_array.flatten! #cleans up the array of arrays into a simple array that is ordered in terms of appearance in the composition
-		total_hits= comp_array.size
-		#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		#////////////////////// Calculate Frequencies for each hit ///////////
-			(0..comp_array.size-2).each do |x| # goes through each hit in the composition
-
-				current_hit = comp_array[x] #current hit 
-				next_hit = comp_array[x+1] #next hit 
-				bol_hash_hash[current_hit][next_hit]+=1.fdiv(comp_array.count(comp_array[x])) # in the current hit hash, it updates the number of times the next hit occured and calculates the % frequency of the next hit following the current hit.
-			end
-		#//////////////////////////////////////////////////////////////////////////////////////////
-
-		#/////////////////// Turns the float values into a 1..10 percent value, if you sum the percents of a given bol they don't quite add up to 100%, it's usually around .98 or 1.0000004 so it's pretty damn close, but that's floats right?
-		(0..18).each do |c| #loop through first hash
-			(0..18).each do |d| #loop through second hash
-				bol_hash_hash[@@bols[c]][@@bols[d]] = bol_hash_hash[@@bols[c]][@@bols[d]].round(2) #truncate values, ie 0.0273342 =>0.03
-			end
-		end
-		#///////////////////////////////////////////////////////////////////////////////////////////
-		return bol_hash_hash
-  	end
 
   	# Outputs a .png showing a directed graph of the markov values for one's chosen bol
   	# if no bol is provided, then it chooses one at random.
