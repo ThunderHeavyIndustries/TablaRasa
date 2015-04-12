@@ -109,7 +109,7 @@ total_composition_graph composition_file, output_name, theory, graph_output_type
 
 total_composition_graph "My_composition", "My_graph", true, 2
 => My_graph.png
-   "graph theory analysis results output to the command line..."
+=> "graph theory analysis results output to the command line..."
 
 total_composition_graph "My_composition", "My_graph", false, 2
 => My_graph.png
