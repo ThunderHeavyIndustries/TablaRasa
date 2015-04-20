@@ -240,7 +240,6 @@ class Composition_analyzer
 		g.write("#{chart_title}.png")
 		puts "...done writing #{chart_title}"
 	end
-
 end
 
 
