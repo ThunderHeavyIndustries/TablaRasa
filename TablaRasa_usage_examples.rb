@@ -62,7 +62,7 @@ RW = R_W.new
 =begin #comment out the "=begin" and the "=end"
   #create random composition
   RW.write_to_file "random_composition", (TG.gen_string_of_hits 500) 
-
+ 
   # Do 3 different markov analysiss of that composition, and create 3 compositions based on those analyses
   RW.write_to_file "markov_comp1", (TG.gen_markov_comp "random_composition", 500, 2) # save to file a markov comp 500 hits long, markov depth of 2
   RW.write_to_file "markov_comp2", (TG.gen_markov_comp "random_composition", 500, 2) # save to file a markov comp 500 hits long, markov depth of 2
@@ -91,3 +91,24 @@ RW = R_W.new
   CA.charts comp_array2, "Number of Hits per composition"
 =end
  #///////////////////////////////////////////////////
+
+
+
+aloke_composition = "/Users/DrThunder/Documents/Code/Git_Hub_Code_Public/TablaRasa/Kaida43.txt"
+
+RW.write_to_file "random_composition", (TG.gen_string_of_hits 500) 
+m = CA.markov_analysis "random_composition", 2
+
+
+
+
+
+
+
+
+
+
+
+
+
+

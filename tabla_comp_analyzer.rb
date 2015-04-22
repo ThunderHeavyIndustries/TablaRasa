@@ -113,15 +113,13 @@ class Composition_analyzer
 		comp_array.flatten! #cleans up the array of arrays into a simple array that is ordered in terms of appearance in the composition
 		total_hits= comp_array.size #total number of hits
 		#////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-		
-		(depth..total_hits-1).each do |x| # goes through each hit in the composition
 
+		(depth..total_hits-1).each do |x| # goes through each hit in the composition
 			current_hit = comp_array[x] #current hit 
 			previous_hits = "" #initialize
 
-			(1..depth).each do |y| #builds the previous hits to depth specified
-				previous_hits = comp_array[x-y]+" "+previous_hits
-			end
+			(x-1).downto(x-depth).each {|d| previous_hits+= comp_array[d]+" "} #create string of previous hits to depth
+
 			bol_hash_hash[current_hit][previous_hits]=0 #initializing a value of zero
 		end
 
@@ -130,10 +128,8 @@ class Composition_analyzer
 			current_hit = comp_array[x] #current hit 
 			previous_hits = "" #initializing
 
-			(1..depth).each do |y| #builds the previous hits to depth specified
+			(x-1).downto(x-depth).each {|d| previous_hits+= comp_array[d]+" "} #create string of previous hits to depth
 
-				previous_hits = comp_array[x-y]+" "+previous_hits
-			end
 			bol_hash_hash[current_hit][previous_hits]+=1.fdiv(comp_array.count(current_hit)) #adds as a percentage of total times it precedes the current hit
 	
 		end
@@ -223,15 +219,15 @@ class Composition_analyzer
 
 		puts "Creating chart"
 
-		data_label = -1
+		data_label = 0
 		data_array.each do |arr|
 
-			data_label+=1
 			a =Array.new
 
 			arr.each {|k,h| a<<h }
 	
 			g.data "comp_#{data_label}".to_sym, a
+			data_label+=1
 		end
 
 		puts "Writing #{chart_title}"
