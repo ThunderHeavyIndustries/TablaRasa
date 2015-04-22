@@ -59,22 +59,28 @@ RW = R_W.new
 
 # This generates some charts for comparing markov compositions based on a random composition
 #///////////////////////////////////////////////////
-=begin #comment out the "=begin" and the "=end"
+#=begin #comment out the "=begin" and the "=end"
   #create random composition
-  RW.write_to_file "random_composition", (TG.gen_string_of_hits 500) 
+
+  #RW.write_to_file "random_composition", (TG.gen_string_of_hits 500) 
+  aloke_composition = "/Users/DrThunder/Documents/Code/Git_Hub_Code_Public/Kaida43_clean.txt"
+
  
   # Do 3 different markov analysiss of that composition, and create 3 compositions based on those analyses
-  RW.write_to_file "markov_comp1", (TG.gen_markov_comp "random_composition", 500, 2) # save to file a markov comp 500 hits long, markov depth of 2
-  RW.write_to_file "markov_comp2", (TG.gen_markov_comp "random_composition", 500, 2) # save to file a markov comp 500 hits long, markov depth of 2
-  RW.write_to_file "markov_comp3", (TG.gen_markov_comp "random_composition", 500, 2) # save to file a markov comp 500 hits long, markov depth of 2
+  RW.write_to_file "markov_comp1", (TG.gen_markov_comp aloke_composition, 500, 8) # save to file a markov comp 500 hits long, markov depth of 2
+  RW.write_to_file "markov_comp2", (TG.gen_markov_comp aloke_composition, 500, 8) # save to file a markov comp 500 hits long, markov depth of 2
+  RW.write_to_file "markov_comp3", (TG.gen_markov_comp aloke_composition, 500, 8) # save to file a markov comp 500 hits long, markov depth of 2
 
   #create an array to store our values
   comp_array = Array.new
+  comp_array2 = Array.new
 
   #Analyze the % of hits and store the analysis in the array
-  comp_array[0] = CA.analyze_composition "markov_comp1" ,0,1
-  comp_array[1] = CA.analyze_composition "markov_comp2" ,0,1
-  comp_array[2] = CA.analyze_composition "markov_comp3" ,0,1
+  comp_array[0] = CA.analyze_composition aloke_composition, 0,1
+  comp_array[1] = CA.analyze_composition "markov_comp1" ,0,1
+  comp_array[2] = CA.analyze_composition "markov_comp2" ,0,1
+  comp_array[3] = CA.analyze_composition "markov_comp3" ,0,1
+  
 
   #pass the array and a title to the chart maker
   CA.charts comp_array, "Hit % per composition"
@@ -83,28 +89,14 @@ RW = R_W.new
   comp_array2 = Array.new
 
   #Analyze the # of hits and store the analysis in the array
-  comp_array2[0] = CA.analyze_composition "markov_comp1" ,1,0
-  comp_array2[1] = CA.analyze_composition "markov_comp2" ,1,0
-  comp_array2[2] = CA.analyze_composition "markov_comp3" ,1,0
-
+  comp_array2[0] = CA.analyze_composition aloke_composition, 1,0
+  comp_array2[1] = CA.analyze_composition "markov_comp1" ,1,0
+  comp_array2[2] = CA.analyze_composition "markov_comp2" ,1,0
+  comp_array2[3] = CA.analyze_composition "markov_comp3" ,1,0
   #pass the array and a title to the chart maker
   CA.charts comp_array2, "Number of Hits per composition"
-=end
+#=end
  #///////////////////////////////////////////////////
-
-
-
-aloke_composition = "/Users/DrThunder/Documents/Code/Git_Hub_Code_Public/TablaRasa/Kaida43.txt"
-
-RW.write_to_file "random_composition", (TG.gen_string_of_hits 500) 
-m = CA.markov_analysis "random_composition", 2
-
-
-
-
-
-
-
 
 
 

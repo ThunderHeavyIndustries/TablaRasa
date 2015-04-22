@@ -13,7 +13,7 @@ require_relative 'tabla_comp_analyzer'
 
 class TablaCompGen
 
-	@@bols= Hash[0,"Ta",1,"Tin",2,"Tun",3,"Din",4,"Te",5,"Re",6,"Tha",7,"Ge",8,"Ka",9,"Dha",10,"Dha2",11,"Dha3",12,"Dhi",13,"Dhe",14,"Dhet",15,"Kre",16,"The",17,"The2",18,"-"]
+	@@bols= Hash[0,"Ta",1,"Tin",2,"Tun",3,"Din",4,"Te",5,"Re",6,"Tha",7,"Ge",8,"Ka",9,"Dha",10,"Dha2",11,"Dha3",12,"Dhi",13,"Dhe",14,"Dhet",15,"Kre",16,"The",17,"The2",18,"-", 19, "Na"]
 	@@bols_invert= @@bols.invert
 	@@TCA= Composition_analyzer.new
 
@@ -91,7 +91,7 @@ class TablaCompGen
 
 		#////////////////Initialization/////////////////////
 		markov_values_hash = @@TCA.markov_analysis composition, markov_depth #this hash comes in like so  (hash of hashes): markov_values_hash["Ta"]=> {"Ta"=>0.02, "Tin"=>0.23.....}
-		dist_hash= Hash["Ta"=>Array.new(),"Tin"=>Array.new(),"Tun"=>Array.new(),"Din"=>Array.new(),"Te"=>Array.new(),"Re"=>Array.new(),"Tha"=>Array.new(),"Ge"=>Array.new(),"Ka"=>Array.new(),"Dha"=>Array.new(),"Dha2"=>Array.new(),"Dha3"=>Array.new(),"Dhi"=>Array.new(),"Dhe"=>Array.new(),"Dhet"=>Array.new(),"Kre"=>Array.new(),"The"=>Array.new(),"The2"=>Array.new(),"-"=>Array.new()] # this is a hash of arrays, the arrays will be filed out based on the percentage of times a hit occurs based on the markov analysis.
+		dist_hash= Hash["Ta"=>Array.new(),"Tin"=>Array.new(),"Tun"=>Array.new(),"Din"=>Array.new(),"Te"=>Array.new(),"Re"=>Array.new(),"Tha"=>Array.new(),"Ge"=>Array.new(),"Ka"=>Array.new(),"Dha"=>Array.new(),"Dha2"=>Array.new(),"Dha3"=>Array.new(),"Dhi"=>Array.new(),"Dhe"=>Array.new(),"Dhet"=>Array.new(),"Kre"=>Array.new(),"The"=>Array.new(),"The2"=>Array.new(),"-"=>Array.new(), "Na"=>Array.new] # this is a hash of arrays, the arrays will be filed out based on the percentage of times a hit occurs based on the markov analysis.
 		markov_composition= "" # This is used to build the composition
 		final_comp = Array.new # this is used to format the composition
 		start = @@bols[rand(19)] #initializing the composition with a random hit

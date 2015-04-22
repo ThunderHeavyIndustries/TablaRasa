@@ -27,6 +27,7 @@ class R_W
 		return contents
 	end
 
+	#changing this to build a string from the line by line read
 	def read_line_by_line file_name #should figure out how i want this all returned, array, string, what?
 		
 		file = File.open( file_name, 'r')

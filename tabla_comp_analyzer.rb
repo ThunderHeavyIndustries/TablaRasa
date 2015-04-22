@@ -10,7 +10,7 @@ require_relative 'read_write_files'
 class Composition_analyzer
 
 	ReadWrite= R_W.new
-	@@bols= Hash[0,"Ta",1,"Tin",2,"Tun",3,"Din",4,"Te",5,"Re",6,"Tha",7,"Ge",8,"Ka",9,"Dha",10,"Dha2",11,"Dha3",12,"Dhi",13,"Dhe",14,"Dhet",15,"Kre",16,"The",17,"The2",18,"-"]
+	@@bols= Hash[0,"Ta",1,"Tin",2,"Tun",3,"Din",4,"Te",5,"Re",6,"Tha",7,"Ge",8,"Ka",9,"Dha",10,"Dha2",11,"Dha3",12,"Dhi",13,"Dhe",14,"Dhet",15,"Kre",16,"The",17,"The2",18,"-", 19, "Na"]
 	@@bi = @@bols.invert
 
 
@@ -33,19 +33,8 @@ class Composition_analyzer
 		#//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 		#///////////////////////////////// Calculate values for frequency, and number of hits, return desired value(s)///////////////////////////
-		if return_frequency_of_hits >0 && return_number_of_hits >0
 
-			@@bols.each do |n, b|# creates a hash with the hits, and how many time they're used in the composition.
-				bol_count[b] = comp_array.count(b)	
-			end
-
-			@@bols.each do |n, b|# creates a hash with the hits, and their frequency in the composition.
-				bol_freq[b] = comp_array.count(b).fdiv(total_hits)
-			end
-
-			return bol_count, bol_freq	
-
-		elsif return_frequency_of_hits >0
+		if return_frequency_of_hits >0
 			@@bols.each do |n, b|# creates a hash with the hits, and their frequency in the composition.
 				bol_freq[b] = comp_array.count(b).fdiv(total_hits)
 			end
@@ -53,7 +42,7 @@ class Composition_analyzer
 
 		elsif return_number_of_hits >0
 			@@bols.each do |n, b|# creates a hash with the hits, and their frequency in the composition.
-				bol_count[b] = comp_array.count(b).fdiv(total_hits)
+				bol_count[b] = comp_array.count(b)
 			end
 			return bol_count
 		else
@@ -104,7 +93,7 @@ class Composition_analyzer
 
 
 		#/////////////////////////////////Initialize necessary items//////////////////////////////////////////////////
-		bol_hash_hash= Hash["Ta"=>Hash.new, "Tin"=>Hash.new, "Tun"=>Hash.new, "Din"=>Hash.new, "Te"=>Hash.new, "Re"=>Hash.new, "Tha"=>Hash.new, "Ge"=>Hash.new, "Ka"=>Hash.new, "Dha"=>Hash.new, "Dha2"=>Hash.new, "Dha3"=>Hash.new, "Dhi"=>Hash.new, "Dhe"=>Hash.new, "Dhet"=>Hash.new, "Kre"=>Hash.new, "The"=>Hash.new, "The2"=>Hash.new, "-"=>Hash.new]
+		bol_hash_hash= Hash["Ta"=>Hash.new, "Tin"=>Hash.new, "Tun"=>Hash.new, "Din"=>Hash.new, "Te"=>Hash.new, "Re"=>Hash.new, "Tha"=>Hash.new, "Ge"=>Hash.new, "Ka"=>Hash.new, "Dha"=>Hash.new, "Dha2"=>Hash.new, "Dha3"=>Hash.new, "Dhi"=>Hash.new, "Dhe"=>Hash.new, "Dhet"=>Hash.new, "Kre"=>Hash.new, "The"=>Hash.new, "The2"=>Hash.new, "-"=>Hash.new, "Na"=>Hash.new ]
 		##///////////////////////////////////////////////////////////////////////////////////
 
 		#///////////////////////// This pulls in the composition and puts it into an array //////////////////////////////////////////////
@@ -120,7 +109,7 @@ class Composition_analyzer
 
 			(x-1).downto(x-depth).each {|d| previous_hits+= comp_array[d]+" "} #create string of previous hits to depth
 
-			bol_hash_hash[current_hit][previous_hits]=0 #initializing a value of zero
+			bol_hash_hash[current_hit][previous_hits] = 0 #initializing a value of zero
 		end
 
 		(depth..total_hits-1).each do |x| # goes through each hit in the composition
