@@ -138,4 +138,3 @@ These are examples of the chart output using [gruff](https://github.com/topfunky
 ![percentage of total hits](http://i.imgur.com/on5YbOB.png "Percentages of hits")
 
  {TablaRasa}
-    Copyright (C) {2015}  {Trace Norris}
